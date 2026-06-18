@@ -1,0 +1,151 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: white;
+  text-align: center;
+}
+
+/* LOGIN */
+.login-body {
+  background: linear-gradient(135deg,#5B4B8A,#F48FB1);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-card {
+  background: rgba(255,255,255,0.15);
+  padding: 30px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  width: 300px;
+}
+
+input {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 90%;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  background: gold;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.small-note {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-top: 10px;
+}
+
+/* MAIN */
+.main-body {
+  background: radial-gradient(#1C2541,#0B132B);
+  min-height: 100vh;
+}
+
+.center {
+  padding-top: 50px;
+}
+
+.subtitle {
+  opacity: 0.8;
+}
+
+.cake {
+  font-size: 40px;
+  cursor: pointer;
+  margin: 20px;
+  animation: float 3s infinite;
+}
+
+@keyframes float {
+  0% {transform: translateY(0);}
+  50% {transform: translateY(-10px);}
+  100% {transform: translateY(0);}
+}
+
+#wish {
+  max-width: 500px;
+  margin: auto;
+  line-height: 1.6;
+}
+
+#fireworks {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+}
+
+/* ENDING */
+.ending-body {
+  background: #0B132B;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.final-text {
+  max-width: 500px;
+  line-height: 1.8;
+  padding: 20px;
+}
+
+.subtext {
+  margin-top: 20px;
+  opacity: 0.8;
+}
+/* 🎈 BALLOONS */
+#balloon-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.balloon {
+  position: absolute;
+  width: 25px;
+  height: 35px;
+  border-radius: 50%;
+  animation: floatUp linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(100vh); }
+  100% { transform: translateY(-10vh); }
+}
+
+/* 🎆 FIREWORKS CANVAS */
+#fireworks {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* 🐱 CAT */
+#cat {
+  position: fixed;
+  bottom: 20px;
+  left: -50px;
+  font-size: 40px;
+  animation: catWalk 12s linear infinite;
+}
+
+@keyframes catWalk {
+  0% { left: -50px; }
+  100% { left: 110%; }
+}
