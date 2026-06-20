@@ -5,7 +5,7 @@ function checkLogin() {
   let u = document.getElementById("username").value;
   let p = document.getElementById("password").value;
 
-  if (u === "sabiha" && p === "1234") {
+  if (u === "sabiha" && p === "23062005") {
     window.location.href = "main.html";
   } else {
     document.getElementById("error").innerText = "Try again 🧸";
