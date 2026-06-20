@@ -13,7 +13,7 @@ function checkLogin() {
 }
 
 function goToMagic() {
-  startFireworks();
+  burstFireworks(1.2);
   setTimeout(() => {
     window.location.href = "ending.html";
   }, 2500);
@@ -27,11 +27,11 @@ function restart() {
 // 🕯️ CANDLE CLICK
 // ==========================
 function blowCandles() {
-  startFireworks();
+  burstFireworks(1.5);
 }
 
 // ==========================
-// ⌨️ TYPING ANIMATION
+// ⌨️ CINEMATIC TYPING
 // ==========================
 const message = `Happy Birthday, Sabiha.
 
@@ -41,96 +41,136 @@ May your day be filled with smiles, laughter, and beautiful surprises.
 You deserve all the happiness in the world.`;
 
 let i = 0;
+
 function typeMessage() {
-  if (i < message.length) {
-    document.getElementById("wish").innerHTML += message.charAt(i);
-    i++;
-    setTimeout(typeMessage, 25);
+  const el = document.getElementById("wish");
+  if (!el) return;
+
+  el.innerHTML = "";
+
+  function type() {
+    if (i < message.length) {
+      el.innerHTML += message.charAt(i);
+      i++;
+      setTimeout(type, 22);
+    }
   }
+
+  type();
 }
 
 // ==========================
-// 🎈 BALLOONS PHYSICS (simple drift)
+// 🎈 BALLOONS (soft physics drift)
 // ==========================
 function createBalloon() {
-  const balloon = document.createElement("div");
-  balloon.className = "balloon";
+  const container = document.getElementById("balloon-container");
+  if (!container) return;
 
-  const colors = ["#F48FB1","#A2D2FF","#CDB4DB","#FFD166"];
-  balloon.style.background = colors[Math.floor(Math.random()*colors.length)];
+  const b = document.createElement("div");
+  b.className = "balloon";
 
-  balloon.style.left = Math.random() * 100 + "vw";
-  balloon.style.animationDuration = (5 + Math.random() * 5) + "s";
+  const colors = ["#F48FB1","#A2D2FF","#CDB4DB","#FFD166","#ffffff"];
+  b.style.background = colors[Math.floor(Math.random()*colors.length)];
 
-  document.getElementById("balloon-container").appendChild(balloon);
+  b.style.left = Math.random() * 100 + "vw";
+  b.style.animationDuration = (6 + Math.random() * 6) + "s";
 
-  setTimeout(() => balloon.remove(), 10000);
+  container.appendChild(b);
+
+  setTimeout(() => b.remove(), 12000);
 }
 
-setInterval(createBalloon, 400);
+setInterval(createBalloon, 350);
 
 // ==========================
-// 🐱 CAT (extra interaction vibe)
+// 🐱 CAT INTERACTION
 // ==========================
-const cat = document.getElementById("cat");
-cat.addEventListener("click", () => {
-  cat.innerText = "😺";
-  setTimeout(() => cat.innerText = "🐱", 1000);
+window.addEventListener("load", () => {
+  const cat = document.getElementById("cat");
+
+  if (cat) {
+    cat.addEventListener("click", () => {
+      cat.innerText = "😺";
+      setTimeout(() => cat.innerText = "🐱", 900);
+    });
+  }
+
+  typeMessage();
 });
 
 // ==========================
-// 🎆 REAL FIREWORKS (CANVAS)
+// 🎆 CINEMATIC FIREWORK ENGINE (LEVEL 2)
 // ==========================
 let canvas, ctx;
 let particles = [];
+let glow = 0;
 
-function startFireworks() {
+function burstFireworks(power = 1) {
   canvas = document.getElementById("fireworks");
+  if (!canvas) return;
+
   ctx = canvas.getContext("2d");
 
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  resizeCanvas();
+  particles = [];
 
-  for (let i = 0; i < 80; i++) {
+  const count = Math.floor(140 * power);
+
+  for (let i = 0; i < count; i++) {
     particles.push(createParticle());
   }
 
   animate();
+
+  // fade out cleanup
+  setTimeout(() => {
+    particles = [];
+  }, 2500);
 }
 
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+window.addEventListener("resize", () => {
+  if (canvas) resizeCanvas();
+});
+
 function createParticle() {
+  const angle = Math.random() * Math.PI * 2;
+  const speed = Math.random() * 7;
+
   return {
     x: window.innerWidth / 2,
     y: window.innerHeight / 2,
-    vx: (Math.random() - 0.5) * 8,
-    vy: (Math.random() - 0.5) * 8,
-    alpha: 1
+    vx: Math.cos(angle) * speed,
+    vy: Math.sin(angle) * speed,
+    alpha: 1,
+    decay: 0.012 + Math.random() * 0.01
   };
 }
 
 function animate() {
   if (!ctx) return;
 
-  ctx.fillStyle = "rgba(0,0,0,0.2)";
-  ctx.fillRect(0,0,canvas.width,canvas.height);
+  // soft fade (NO BLACK SCREEN)
+  ctx.fillStyle = "rgba(11, 19, 43, 0.15)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   particles.forEach(p => {
     p.x += p.vx;
     p.y += p.vy;
-    p.alpha -= 0.01;
+    p.alpha -= p.decay;
 
-    ctx.fillStyle = `rgba(255, 200, 80, ${p.alpha})`;
-    ctx.fillRect(p.x, p.y, 3, 3);
+    ctx.fillStyle = `rgba(255, 220, 120, ${p.alpha})`;
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = "gold";
+
+    ctx.fillRect(p.x, p.y, 2.5, 2.5);
   });
 
   particles = particles.filter(p => p.alpha > 0);
 
   requestAnimationFrame(animate);
 }
-
-// ==========================
-// INIT ON LOAD
-// ==========================
-window.onload = () => {
-  typeMessage();
-};
