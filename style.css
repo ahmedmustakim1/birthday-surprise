@@ -150,13 +150,44 @@ button:hover {
   margin-top: 10px;
 }
 
-/* SAFE DEFAULT FOR ENDING PAGE */
+/* 🌌 SECRET ENDING PAGE */
 .ending-body {
-  background: #0B132B;
+  background:
+    linear-gradient(
+      rgba(11, 19, 43, 0.65),
+      rgba(11, 19, 43, 0.65)
+    ),
+    url("background.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
   color: white;
+
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.final-text,
-.subtext {
+.final-text {
+  max-width: 500px;
+  line-height: 1.8;
+  padding: 30px;
+
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+
   color: white;
+
+  z-index: 5;
+}
+
+.subtext {
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 20px;
 }
